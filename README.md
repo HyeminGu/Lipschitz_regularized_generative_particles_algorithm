@@ -24,12 +24,13 @@ See more parameters in util/input_args.py
 * random_seed=0 for trajectory plot
 * random_seed=0,1,2,3,4 for Divergence, Lipschitz regularized FI loss plots
 
+```
 python f-Gamma-gpa.py --f KL --formulation DV -L 1.0 --dataset Learning_student_t -nu 0.5 -NN fnn -N_fnn_layers 32 32 32 --epochs_nn 5 --epochs 5000 --lr_NN 0.01 --lr_P 0.1 --exp_no 0 --random_seed $random_seed --plot_result True
 
 python f-Gamma-gpa.py --f alpha -alpha 2 -L 1.0 --dataset Learning_student_t -nu 0.5 -NN fnn -N_fnn_layers 32 32 32 --epochs_nn 5 --epochs 5000 --lr_NN 0.01 --lr_P 0.1 --exp_no 0 --random_seed $random_seed --plot_result True
 
 python f-Gamma-gpa.py --f alpha -alpha 10 -L 1.0 --dataset Learning_student_t -nu 0.5 -NN fnn -N_fnn_layers 32 32 32 --epochs_nn 5 --epochs 5000 --lr_NN 0.01 --lr_P 0.1 --exp_no 0 --random_seed $random_seed --plot_result True
-
+```
 
 ### Gene expression data merging
 * Influence of choosing latent dimensions
