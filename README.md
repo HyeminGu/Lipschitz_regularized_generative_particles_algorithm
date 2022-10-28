@@ -9,7 +9,7 @@ To install requirements:
 
 ## Dependent python libraries
 ```
-pip install numpy, tensorflow, matplotlib, scipy, 
+pip install numpy, tensorflow, matplotlib, scipy
 pip install umap-learn  # gene_expression_example
 ```
 
