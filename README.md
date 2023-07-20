@@ -67,7 +67,7 @@ We observed that the choice of $f\_\text{KL}$ for heavy-tailed data $Student-t(\
 
 | $(f\_{\text{KL}}, \Gamma\_1)$-GPA | $(f\_{\alpha}, \Gamma\_1)$-GPA, $\alpha=2.0$ | $(f\_{\alpha}, \Gamma\_1)$-GPA, $\alpha=10.0$ | 
 | :------------------------------: | :-----------------------------------------: | :----------------------------: |
-| <img align="center" width="210" alt="KL-Lip1 GPA transporting Gaussian to Student-t(0.5) in 2D" src="./figures/kl-lipshitz_1_0p5_0200_0200_00_heavy_tail-movie.gif?raw=true"/> | <img align="center" width="210" alt="alpha=2-Lip1 GPA transporting Gaussian to Student-t(0.5) in 2D" src="./figures/alpha=2-lipshitz_1_0p5_0200_0200_00_heavy_tail-movie.gif?raw=true"/> | <img align="center" width="210" alt="alpha=10-Lip1 GPA transporting Gaussian to Student-t(0.5) in 2D" src="./figures/alpha=10-lipshitz_1_0p5_0200_0200_00_heavy_tail-movie.gif?raw=true"/> |
+| <img align="center" width="210" alt="KL-Lip1 GPA transporting Gaussian to Student-t(0.5) in 2D" src="./figures/kl-lipshitz_1_0p5_0200_0200_00_heavy_tail-movie.gif"/> | <img align="center" width="210" alt="alpha=2-Lip1 GPA transporting Gaussian to Student-t(0.5) in 2D" src="./figures/alpha=2-lipshitz_1_0p5_0200_0200_00_heavy_tail-movie.gif?raw=true"/> | <img align="center" width="210" alt="alpha=10-Lip1 GPA transporting Gaussian to Student-t(0.5) in 2D" src="./figures/alpha=10-lipshitz_1_0p5_0200_0200_00_heavy_tail-movie.gif?raw=true"/> |
 
 Similar behavior is observed in GAN [Birrell, 2020](https://arxiv.org/abs/2011.05953): $f\_\alpha$ was more effective than $f\_\text{KL}$ in learning a heavy-tailed distribution with GAN.
 
