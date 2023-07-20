@@ -59,7 +59,7 @@ Then it is ready to run GPA in a console
 ```console
 python3 main.py --dataset "Dataset name" --phi_model GPA_NN
 ```
-or in a Jupyter notebook. There are sample Jupyter notebook examples in the `Notebooks` folder.
+or in a Jupyter notebook. There are sample Jupyter notebook examples in the `notebooks` folder.
 
 ## Features of Lipschitz-regularized GPA
 ### Flexibility in the choice of Loss
