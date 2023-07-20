@@ -88,7 +88,7 @@ There are a lot of literatures and methods for data augmentation to enrich train
 
 
 ### Sample diversity of the generated samples
-Since GPA is designed to transport particles to particles, the source particles should eventually match the target particles when the number of samples are equal $M=N$. Indeed it is not rare to observe that the transported particles exactly match the target particles. On the other hand, when $M > N$, it is less likely to meet this overfitting behavior in shapes and then GPA is entitled to be a generative model. 
+Since GPA is designed to transport particles to particles, $M$ number of source particles should eventually match the $N$ number of target particles especially when the number of samples are equal $M=N$. Indeed it is not rare to observe that the transported particles exactly match the target particles. On the other hand, this overfitting behavior in shapes reduces if we set $M > N$ and therefore GPA is entitled to be a generative model. 
 
 
 | 200 Target samples |
