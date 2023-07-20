@@ -68,7 +68,7 @@ We observed that the choice of $f\_\text{KL}$ for heavy-tailed data $Student-t(\
 
 | 1-Lipschitz-regularized KL GPA | 1-Lipschitz-regularized 2-alpha GPA | 1-Lipschitz-regularized 10-alpha GPA |
 | :----------------------------: | :---------------------------------: | :----------------------------------: |
-| <img align="center" width="30%" alt="KL-Lip1 GPA transporting Gaussian to Student-t(0.5) in 2D" src="./figures/kl-lipshitz_1_0p5_0200_0200_00_heavy_tail-movie.gif?raw=true"/> | <img align="center" width="30%" alt="alpha=2-Lip1 GPA transporting Gaussian to Student-t(0.5) in 2D" src="figures/alpha=2-lipshitz_1_0p5_0200_0200_00_heavy_tail-movie.gif?raw=true"/> | <img align="center" width="30%" alt="alpha=10-Lip1 GPA transporting Gaussian to Student-t(0.5) in 2D" src="figures/alpha=10-lipshitz_1_0p5_0200_0200_00_heavy_tail-movie.gif?raw=true"/> |
+| <img align="center" width="220" alt="KL-Lip1 GPA transporting Gaussian to Student-t(0.5) in 2D" src="./figures/kl-lipshitz_1_0p5_0200_0200_00_heavy_tail-movie.gif?raw=true"/> | <img align="center" width="220" alt="alpha=2-Lip1 GPA transporting Gaussian to Student-t(0.5) in 2D" src="figures/alpha=2-lipshitz_1_0p5_0200_0200_00_heavy_tail-movie.gif?raw=true"/> | <img align="center" width="220" alt="alpha=10-Lip1 GPA transporting Gaussian to Student-t(0.5) in 2D" src="figures/alpha=10-lipshitz_1_0p5_0200_0200_00_heavy_tail-movie.gif?raw=true"/> |
 
 Similar behavior is observed in GAN [Birrell, 2020](https://arxiv.org/abs/2011.05953): $f\_\alpha$ was more effective than $f\_\text{KL}$ in learning a heavy-tailed distribution with GAN.
 
@@ -84,7 +84,7 @@ There are a lot of literatures and methods for data augmentation to enrich train
 
 | 1-Lipschitz-regularized KL-divergence while training GAN | Generated samples from GAN trained with 200 original samples | Generated samples from GAN trained with 200 + 5000 GPA-augmented samples | 
 | :---------------------------------------------------------: | :----------------------------------: | :-----------------------------------------: |
-| <img align="center" width="600" alt="KL-Lip1 GAN training loss decrease using 200 target samples and 200 target samples + 5000 augmented samples obtained by KL-Lip1 GPA" src="figures/data_augmentation_influence.png?raw=true"/> |  <img align="center" width="550" alt="Generated samples from KL-Lip1 GAN using 200 target samples" src="figures/without_augmentation.png?raw=true"/> |  <img align="center" width="220" alt="Generated samples from KL-Lip1 GAN using 200 target samples + 5000 augmented samples obtained by KL-Lip1 GPA" src="figures/with_augmentation.png?raw=true"/> |
+| <img align="center" width="600" alt="KL-Lip1 GAN training loss decrease using 200 target samples and 200 target samples + 5000 augmented samples obtained by KL-Lip1 GPA" src="figures/data_augmentation_influence.png?raw=true"/> |  <img align="center" width="550" alt="Generated samples from KL-Lip1 GAN using 200 target samples" src="figures/without_augmentation.png?raw=true"/> |  <img align="center" width="240" alt="Generated samples from KL-Lip1 GAN using 200 target samples + 5000 augmented samples obtained by KL-Lip1 GPA" src="figures/with_augmentation.png?raw=true"/> |
 
 
 ### Sample diversity of the generated samples
