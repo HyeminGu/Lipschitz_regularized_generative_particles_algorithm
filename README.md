@@ -75,6 +75,7 @@ Similar behavior is observed in GAN [Birrell, 2020](https://arxiv.org/abs/2011.0
 ### Learning from scarce data
 Instead of learning a generator $g\_\theta$ as in GANs, solving ODEs in GPA makes it available to learn from a small number of target samples while GANs fail in the same setting. In the MNIST example, we used 200 target samples to learn GPA and GANs. Discriminators in GANs and GPA are implemented in similar neural network structures but only GANs fail when the target sample size is small. We demonstrate how to cure this problematic behavior of GANs from a relatively simple example below.
 
+
 | $(f\_{\text{KL}}, \Gamma\_1)$-GPA | $(f\_{\text{KL}}, \Gamma\_1)$-GAN | Wasserstein GAN | 
 | :-------------------------------: | :-------------------------------: | :-------------: |
 |  <img align="center" height="220" alt="Generated images from KL-Lip1 GPA using 200 target samples" src="./figures/kl-lip1-gpa-600_200samples.png?raw=true"/> |  <img align="center" height="220" alt="Generated images from KL-Lip1 GAN using 200 target samples" src="./figures/kl-lip1-gan-200samples.png?raw=true"/> |  <img align="center" height="220" alt="Generated images from Wasserstein GAN using 200 target samples" src="./figures/wasserstein-gan-200samples.png?raw=true"/> |
