@@ -48,6 +48,7 @@ From a computational perspective, it becomes feasible to solve the high-dimensio
 On the other hand, Generative Adversarial Network (GAN), precisely $f$-GAN [Nowozin, 2016](https://arxiv.org/abs/1606.00709) also optimizes $\phi$ named *discriminator*. Instead of transporting particles, GAN redistributes particles by training another neural network named *generator* $g\_\theta$ for minimizing the loss, i.e. $\max\_{\phi} H_f[\phi; g\_\theta (Z), X]$: $$\min\_{\theta} \max\_{\phi} H_f[\phi; g\_\theta (Z), X] , \quad \text{where}$$ $$H_f[\phi; g\_\theta (Z), X] = \frac{1}{M}\sum\_{i=1}\^M \phi(g\_{\theta} (Z^{(i)}))- \inf\_{\nu \in \mathbb{R}}\left\\{ \nu + \frac{1}{N}\sum\_{i=1}\^N f^\*(\phi(X^{(i)})-\nu)\right\\}.$$
 
 <img align="center" width="1040" alt="Comparison of computational schemes: Left - GAN, Right - GPA" src="figures/gpa_vs_gan.png?raw=true"/> 
+*Left: Computational cheme for GAN, Right: Computational cheme for GPA*
 
 The lines below run the $(f, \Gamma_L)$-GPA on the source $P$ and the target $Q$. Since GPA hyper-parameters and data-dependent parameters should be tuned example-by-example, it is required to 
 
@@ -103,7 +104,7 @@ Since GPA is designed to transport particles to particles, $M$ number of source 
 
 
 ## Application to high-dimensional gene expression data sets integration
-Since GPA admits setting arbitrary source $P$ and target $Q$, phase transition arises as a natural application of GPA. There is also a GAN architecture designed for this problem: Cycle-Consistent Adversarial Network(Cycle-GAN, Zhu, [2017](https://arxiv.org/abs/1703.10593)). We suggest to apply GPA and transport one data set to the other in order to integrate several gene expression data sets aiming at studying a same disease with a similar experiment design but having batch effects from their different measuring conditions. 
+Since GPA admits setting arbitrary source $P$ and target $Q$, phase transition arises as a natural application of GPA. There is also a GAN architecture designed for this problem: Cycle-Consistent Adversarial Network(Cycle-GAN, Zhu, [2017](https://arxiv.org/abs/1703.10593)). We suggest to apply GPA and transport one data set to the other in order to integrate several gene expression data sets aiming at studying a same disease in similar experiment designs but having batch effects from their different measuring conditions. 
 
  However, gene expression data lie in a significantly high-dimensional space $\mathbb{R}^{54,675}$ where gradient descent on particles is feckless. Therefore, we use a pretrained autoencoder  to project data sets into a lower dimensional latent space and transport the data set in the latent space. Indeed we ran GPA in a 50 dimensional latent space obtained by PCA serving as an autoencoder. Finally, the reconstruction of the transported data set to the original space completes the task.
 
