@@ -65,8 +65,10 @@ or in a Jupyter notebook. There are sample Jupyter notebook examples in the `not
 ### Flexibility in the choice of Loss
 We observed that the choice of $f\_\text{KL}$ for heavy-tailed data $Student-t(\nu)$ with $\nu=0.5$ renders the discriminator optimization step numerically unstable and eventually leads to the collapse of the algorithm.  On the other hand, the choice of $f\_\alpha$ with $\alpha > 1$ makes the algorithm  stable. However, it still takes a long time to transport particles deep into the  heavy tails due to the speed restriction of the Lipschitz regularization.
 
-<img align="center" width="30%" alt="KL-Lip1 GPA transporting Gaussian to Student-t(0.5) in 2D" src="./figures/kl-lipshitz_1_0p5_0200_0200_00_heavy_tail-movie.gif?raw=true"/><img align="center" width="30%" alt="alpha=2-Lip1 GPA transporting Gaussian to Student-t(0.5) in 2D" src="figures/alpha=2-lipshitz_1_0p5_0200_0200_00_heavy_tail-movie.gif?raw=true"/><img align="center" width="30%" alt="alpha=10-Lip1 GPA transporting Gaussian to Student-t(0.5) in 2D" src="figures/alpha=10-lipshitz_1_0p5_0200_0200_00_heavy_tail-movie.gif?raw=true"/>
-*Left: $(f\_{\text{KL}}, \Gamma\_1)$-GPA, Center: $(f\_{\alpha}, \Gamma\_1)$-GPA, $\alpha=2.0$, Right: $(f\_{\alpha}, \Gamma\_1)$-GPA, $\alpha=10.0$*
+
+| 1-Lipschitz-regularized KL GPA | 1-Lipschitz-regularized 2-alpha GPA | 1-Lipschitz-regularized 10-alpha GPA |
+| :----------------------------: | :---------------------------------: | :----------------------------------: |
+| <img align="center" width="30%" alt="KL-Lip1 GPA transporting Gaussian to Student-t(0.5) in 2D" src="./figures/kl-lipshitz_1_0p5_0200_0200_00_heavy_tail-movie.gif?raw=true"/> | <img align="center" width="30%" alt="alpha=2-Lip1 GPA transporting Gaussian to Student-t(0.5) in 2D" src="figures/alpha=2-lipshitz_1_0p5_0200_0200_00_heavy_tail-movie.gif?raw=true"/> | <img align="center" width="30%" alt="alpha=10-Lip1 GPA transporting Gaussian to Student-t(0.5) in 2D" src="figures/alpha=10-lipshitz_1_0p5_0200_0200_00_heavy_tail-movie.gif?raw=true"/> |
 
 Similar behavior is observed in GAN [Birrell, 2020](https://arxiv.org/abs/2011.05953): $f\_\alpha$ was more effective than $f\_\text{KL}$ in learning a heavy-tailed distribution with GAN.
 
@@ -74,18 +76,13 @@ Similar behavior is observed in GAN [Birrell, 2020](https://arxiv.org/abs/2011.0
 ### Learning from scarce data
 Instead of learning a generator $g\_\theta$ as in GANs, solving ODEs in GPA makes it available to learn from a small number of target samples while GANs fail in the same setting. In the MNIST example, we used 200 target samples to learn GPA and GANs. Discriminators in GANs and GPA are implemented in similar neural network structures but only GANs fail when the target sample size is small. We demonstrate how to cure this problematic behavior of GANs from a relatively simple example below.
 
-<img align="center" height="220" alt="Generated images from KL-Lip1 GPA using 200 target samples" src="./figures/kl-lip1-gpa-600_200samples.png?raw=true"/> *image_caption*
-<img height="220" alt="Generated images from KL-Lip1 GAN using 200 target samples" src="figures/kl-lip1-gan-200samples.png?raw=true"/>   *image_caption*
- <img height="220" alt="Generated images from Wasserstein GAN using 200 target samples" src="figures/wasserstein-gan-200samples.png?raw=true"/> *image_caption*
-
-<| $(f\_{\text{KL}}, \Gamma\_1)$-GPA | $(f\_{\text{KL}}, \Gamma\_1)$-GAN | Wasserstein GAN |>
-| GPA | GAN | Wasserstein GAN |
-| :-------------------------------: | :-------------------------------: | :-------------: |
+| 1-Lipschitz-regularized KL GPA | 1-Lipschitz-regularized KL GAN | Wasserstein GAN |
+| :----------------------------: | :----------------------------: | :-------------: |
 | <img height="220" alt="Generated images from KL-Lip1 GPA using 200 target samples" src="./figures/kl-lip1-gpa-600_200samples.png?raw=true"/> |  <img height="220" alt="Generated images from KL-Lip1 GAN using 200 target samples" src="figures/kl-lip1-gan-200samples.png?raw=true"/> |  <img height="220" alt="Generated images from Wasserstein GAN using 200 target samples" src="figures/wasserstein-gan-200samples.png?raw=true"/> |
 
 There are a lot of literatures and methods for data augmentation to enrich training samples for GANs. GPA can be used as a data augmentation tool. [Swiss roll example](#lipschitz-regularized-generative-particles-algorithm) in the introduction restricts the setting that only 200 training data are available. We generate 5000 artificial samples from these 200 training data using GPA and then train a GAN with the original 200 + the 5000 GPA-augmented data. It stabilizes the GAN-training as well as results in a better quality for the generated samples from GAN. 
 
-| $(f\_{\text{KL}}, \Gamma\_1)$-divergence while training GAN | Generated samples from GAN trained with 200 original samples | Generated samples from GAN trained with 200 + 5000 GPA-augmented samples | 
+| 1-Lipschitz-regularized KL-divergence while training GAN | Generated samples from GAN trained with 200 original samples | Generated samples from GAN trained with 200 + 5000 GPA-augmented samples | 
 | :---------------------------------------------------------: | :----------------------------------: | :-----------------------------------------: |
 | <img align="center" width="600" alt="KL-Lip1 GAN training loss decrease using 200 target samples and 200 target samples + 5000 augmented samples obtained by KL-Lip1 GPA" src="figures/data_augmentation_influence.png?raw=true"/> |  <img align="center" width="550" alt="Generated samples from KL-Lip1 GAN using 200 target samples" src="figures/without_augmentation.png?raw=true"/> |  <img align="center" width="220" alt="Generated samples from KL-Lip1 GAN using 200 target samples + 5000 augmented samples obtained by KL-Lip1 GPA" src="figures/with_augmentation.png?raw=true"/> |
 
@@ -94,12 +91,12 @@ There are a lot of literatures and methods for data augmentation to enrich train
 Since GPA is designed to transport particles to particles, the source particles should eventually match the target particles when the number of samples are equal $M=N$. Indeed it is not rare to observe that the transported particles exactly match the target particles. On the other hand, when $M > N$, it is less likely to meet this overfitting behavior in shapes and then GPA is entitled to be a generative model. 
 
 
-| $N=200$ Target samples |
+| 200 Target samples |
 |:----------------------:|
 | <img align="center" height="220" alt="MNIST 200 target samples" src="figures/kl-lipschitz_1_cond_0200_0600_00_check_overfitting-tiled_target.png?raw=true"/> |
 
 
-|$M=200$ Generated samples from $(f\_\text{KL}, \Gamma_1)$-GPA | $M=600$ Generated samples from $(f\_\text{KL}, \Gamma_1)$-GPA |
+| 200 Generated samples from 1-Lipschitz-regularized KL GPA | 600 Generated samples from 1-Lipschitz-regularized KL GPA |
 |:--------------------------------------------------------:|:---------------------------------------------------------------------:|
 |<img align="center" height="220" alt="MNIST 200 target samples" src="figures/kl-lip1-gpa-200_200samples.png?raw=true"/> | <img align="center" height="220" alt="MNIST 200 target samples" src="figures/kl-lip1-gpa-600_200samples.png?raw=true"/> |
 
