@@ -1,10 +1,10 @@
-#Lipschitz-regularized Generative Particles Algorithm
+# Lipschitz-regularized Generative Particles Algorithm
 We propose **a generative model based on solving ODEs**. Unlike Score-based Generative Model(SGM, Song et al., [2020](https://arxiv.org/abs/2011.13456)) which push-forwards a target measure to Gaussian and reverses the process by solving differential equations, Lipschitz-regularized Generative Particles Algorithm (Lipschitz-regularized GPA) push-forwards an arbitrary source measure to a target measure. Our ODE systems are derived from gradient flows likewise to Maximum Mean Discrepancy flow(MMD flow, Arbel et al., [2019](https://arxiv.org/abs/1906.04370)) and Stein Variational Gradient Descent as Gradient Flow(SVGD flow, Liu, [2017](https://arxiv.org/abs/1704.07520)) which gave us inspiration to build our key algorithm. But our loss functions are optimized over the space of Lipschitz continuous Neural Networks instead of RKHS from the two former papers so that our algorithm is ready-to-use for various interesting examples as well as scalable to higher dimensions $\leq 784$ in our observation without assists of other techniques. Also, our Lipschitz-regularized loss functions are well-defined as divergences as discovered by Birrell [2020](https://arxiv.org/abs/2011.05953) and Dupuis [2019](https://arxiv.org/abs/1911.07422).
 <img align="center" width="250" alt="KL-Lip1 GPA transporting Gaussian to Sierpinski carpet in 3D" src="./Figures/KL-Lipschitz_1.0000_4096_4096_00_test_sierpinski2movie.gif"/>
 <img align="center" width="250" alt="alpha2-Lip1 GPA transporting MNIST digit 2 to MNIST digit 0 in 784D" src="./Figures/alpha=02.00-Lipshitz_1.00_02_00_0200_0200_00_0movie.gif"/>
 [<img align="center" width="250" alt="KL-Lip1 GPA transporting 5000 samples from Gaussian to Swiss roll approximated by 200 samples in 3D" src="./Figures/KL-Lipschitz_1.0000_0200_5000_00_3D_Swiss_roll-movie.gif"/>](#learning-from-scarce-data)
 
-##Lipschitz-regularized $f$-divergences
+## Lipschitz-regularized $f$-divergences
 We use a new divergence from Birrell [2020](https://arxiv.org/abs/2011.05953) which combines two *metrics* on probability measures.
 
 * For a convex, superlinear, lower semi-continuous function $f$ with $f(1)=0$, classical $f$-divergences $D_f(P\|Q)$ are defined as $E_Q [f(\frac{dP}{dQ})]$ for $P \ll Q$ and $\infty$ otherwise. Obviously, it is meaningful when $P$ is absolutely continuous with respect to $Q$. Some examples are $f(x)=x\log(x)$ defines KL divergence, $f(x)=\frac{x^\alpha-1}{\alpha (\alpha-1)}$ with $\alpha > 1$ define alpha-divergences where the alpha-divergence converges to KL-divergence as $\alpha \rightarrow 1$. There are various $f$'s in this class as listed in  $f$-GANs (Nowozin, [2016](https://arxiv.org/abs/1606.00709)). 
@@ -32,7 +32,7 @@ Q = np.random.normal(loc=10.0, scale=2.0, size=(300,2)) # 300 2D samples from Q
 print(f_Lip_divergence(P, Q, L=1.0))
 ```
 
-##Gradient flow on probability measures and Lipschitz-regularized GPA
+## Gradient flow on probability measures and Lipschitz-regularized GPA
 In our paper [2022](https://arxiv.org/abs/2210.17230), it is proven that the optimal $\phi^{L,\*} \in \Gamma_L$ in the variational representation of the Lipschitz-regularized $f$-divergence $D_f^{\Gamma_L}(P\|Q)$ is the **first variation of the Lipschitz-regularized divergence $D_f^{\Gamma_L}(P\|Q)$** with respect to purturbing the first argument $P$: 
 $$\frac{\delta  D_f^{\Gamma_L}(P\|Q)}{\delta P}= \phi^{L,\*} =  \underset{\phi\in \Gamma_L}{\rm argmax} \left\\{E_P[\phi]- \inf\_{\nu \in \mathbb{R}}(\nu + E_Q[f^\*(\phi-\nu)])\right\\}.$$ 
 Precisely, the optimal $\phi^{L,\*}$ serves as a potential to transport the probability measure $P$ toward $Q$ leading to the *transport/variational* PDE reformulation of:
@@ -58,8 +58,8 @@ python3 main.py --dataset "Dataset name" --phi_model GPA_NN
 ```
 or in a Jupyter notebook. There are sample Jupyter notebook examples in the `Notebooks` folder.
 
-##Features of Lipschitz-regularized GPA
-###Flexibility in the choice of Loss
+## Features of Lipschitz-regularized GPA
+### Flexibility in the choice of Loss
 We observed that the choice of $f\_\text{KL}$ for heavy-tailed data $Student-t(\nu)$ with $\nu=0.5$ renders the discriminator optimization step numerically unstable and eventually leads to the collapse of the algorithm.  On the other hand, the choice of $f\_\alpha$ with $\alpha > 1$ makes the algorithm  stable. However, it still takes a long time to transport particles deep into the  heavy tails due to the speed restriction of the Lipschitz regularization.
 
 | $(f\_{\text{KL}}, \Gamma\_1)$-GPA | $(f\_{\alpha}, \Gamma\_1)$-GPA, $\alpha=2.0$ | $(f\_{\alpha}, \Gamma\_1)$-GPA, $\alpha=10.0$ | 
@@ -69,7 +69,7 @@ We observed that the choice of $f\_\text{KL}$ for heavy-tailed data $Student-t(\
 Similar behavior is observed in GAN [Birrell, 2020](https://arxiv.org/abs/2011.05953): $f\_\alpha$ was more effective than $f\_\text{KL}$ in learning a heavy-tailed distribution with GAN.
 
 
-###Learning from scarce data
+### Learning from scarce data
 Instead of learning a generator $g\_\theta$ as in GANs, solving ODEs in GPA makes it available to learn from a small number of target samples while GANs fail in the same setting. In the MNIST example, we used 200 target samples to learn GPA and GANs. Discriminators in GANs and GPA are implemented in similar neural network structures but only GANs fail when the target sample size is small. We demonstrate how to cure this problematic behavior of GANs from a relatively simple example below.
 
 | $(f\_{\text{KL}}, \Gamma\_1)$-GPA | $(f\_{\text{KL}}, \Gamma\_1)$-GAN | Wasserstein GAN | 
@@ -83,7 +83,7 @@ There are a lot of literatures and methods for data augmentation to enrich train
 |  <img align="center" width="600" alt="KL-Lip1 GAN training loss decrease using 200 target samples and 200 target samples + 5000 augmented samples obtained by KL-Lip1 GPA" src="./Figures/data_augmentation_influence.png"/> |  <img align="center" width="550" alt="Generated samples from KL-Lip1 GAN using 200 target samples" src="./Figures/without_augmentation.png"/> |  <img align="center" width="220" alt="Generated samples from KL-Lip1 GAN using 200 target samples + 5000 augmented samples obtained by KL-Lip1 GPA" src="./Figures/with_augmentation.png"/> |
 
 
-###Sample diversity of the generated samples
+### Sample diversity of the generated samples
 Since GPA is designed to transport particles to particles, the source particles should eventually match the target particles when the number of samples are equal $M=N$. Indeed it is not rare to observe that the transported particles exactly match the target particles. On the other hand, when $M > N$, it is less likely to meet this overfitting behavior in shapes and then GPA is entitled to be a generative model. 
 
 | $N=200$ Target samples |
@@ -96,7 +96,7 @@ Since GPA is designed to transport particles to particles, the source particles 
 
 
 
-##Application to high-dimensional gene expression data sets integration
+## Application to high-dimensional gene expression data sets integration
 Since GPA admits setting arbitrary source $P$ and target $Q$, phase transition arises as a natural application of GPA. There is also a GAN architecture designed for this problem: Cycle-Consistent Adversarial Network(Cycle-GAN, Zhu, [2017](https://arxiv.org/abs/1703.10593)). We suggest to apply GPA and transport one data set to the other in order to integrate several gene expression data sets aiming at studying a same disease with a similar experiment design but having batch effects from their different measuring conditions. 
 
  However, gene expression data lie in a significantly high-dimensional space $\mathbb{R}^{54,675}$ where gradient descent on particles is feckless. Therefore, we use a pretrained autoencoder  to project data sets into a lower dimensional latent space and transport the data set in the latent space. Indeed we ran GPA in a 50 dimensional latent space obtained by PCA serving as an autoencoder. Finally, the reconstruction of the transported data set to the original space completes the task.
