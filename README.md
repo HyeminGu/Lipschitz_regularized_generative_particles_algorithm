@@ -1,7 +1,7 @@
 # Lipschitz-regularized Generative Particles Algorithm
 We propose **a generative model based on solving ODEs**. Unlike Score-based Generative Model(SGM, Song et al., [2020](https://arxiv.org/abs/2011.13456)) which push-forwards a target measure to Gaussian and reverses the process by solving differential equations, Lipschitz-regularized Generative Particles Algorithm (Lipschitz-regularized GPA) push-forwards an arbitrary source measure to a target measure. Our ODE systems are derived from gradient flows likewise to Maximum Mean Discrepancy flow(MMD flow, Arbel et al., [2019](https://arxiv.org/abs/1906.04370)) and Stein Variational Gradient Descent as Gradient Flow(SVGD flow, Liu, [2017](https://arxiv.org/abs/1704.07520)) which gave us inspiration to build our key algorithm. But our loss functions are optimized over the space of Lipschitz continuous Neural Networks instead of RKHS from the two former papers so that our algorithm is ready-to-use for various interesting examples as well as scalable to higher dimensions $\leq 784$ in our observation without assists of other techniques. Also, our Lipschitz-regularized loss functions are well-defined as divergences as discovered by Birrell [2020](https://arxiv.org/abs/2011.05953) and Dupuis [2019](https://arxiv.org/abs/1911.07422).
 
-<img align="center" width="250" alt="KL-Lip1 GPA transporting Gaussian to Sierpinski carpet in 3D" src="./Figures/KL-Lipschitz_1.0000_4096_4096_00_test_sierpinski2movie.gif?raw=true"/><img align="center" width="250" alt="alpha2-Lip1 GPA transporting MNIST digit 2 to MNIST digit 0 in 784D" src="./Figures/alpha=02.00-Lipshitz_1.00_02_00_0200_0200_00_0movie.gif?raw=true"/><img align="center" width="250" alt="KL-Lip1 GPA transporting 5000 samples from Gaussian to Swiss roll approximated by 200 samples in 3D" src="./Figures/KL-Lipschitz_1.0000_0200_5000_00_3D_Swiss_roll-movie.gif?raw=true"/>
+<img align="center" width="250" alt="KL-Lip1 GPA transporting Gaussian to Sierpinski carpet in 3D" src="./figures/kl-lipschitz_1_4096_4096_00_test_sierpinski2movie.gif?raw=true"/><img align="center" width="250" alt="alpha2-Lip1 GPA transporting MNIST digit 2 to MNIST digit 0 in 784D" src="./figures/alpha=2-Lipshitz_1_02_00_0200_0200_00_0movie.gif?raw=true"/><img align="center" width="250" alt="KL-Lip1 GPA transporting 5000 samples from Gaussian to Swiss roll approximated by 200 samples in 3D" src="./figures/kl-lipschitz_1_0200_5000_00_3d_swiss_roll-movie.gif?raw=true"/>
 
 ## Lipschitz-regularized $f$-divergences
 We use a new divergence from Birrell [2020](https://arxiv.org/abs/2011.05953) which combines two *metrics* on probability measures.
@@ -38,7 +38,7 @@ Precisely, the optimal $\phi^{L,\*}$ serves as a potential to transport the prob
 $$\partial\_t P_t + {\rm div}(P_t v_t\^L) =0, \quad P_0=P \in \mathcal{P}\_1(\mathbb{R}^d)$$
 $$v_t\^L= -\nabla \phi_t^{L,\*}, \quad \phi_t^{L,\*} = \underset{\phi \in \Gamma_L}{\rm argmax}  \left\\{E\_{P_t}[\phi]- \inf\_{\nu \in \mathbb{R}}(\nu + E_Q[f^\*(\phi-\nu)])\right \\}.$$ Note that without Lipschitz regularization, the velocity field $v\_t$ will diverge especially when $P_t \not\ll Q$. On the other hand, **Lipschitz-regularization bounds the particle speed by $L$:  $\\|v_t\^L\\|\leq L$.** In addition, the solution curve $\\{P_t\\}\_{t\geq 0}$ of the transport PDE dissipates $D_f^{\Gamma_L}(P\|Q)$: $$\frac{d}{dt} D_f^{\Gamma_L} (P_t\|Q)=-I_f\^{\Gamma_L}(P_t\|Q)=\int |\nabla \phi_t^{L, \*}|^2 P_t(dx) \leq 0.$$ 
 
-<img align="center" width="860" alt="Gradient flow on probability measures which dissipates the divergence or loss" src="./Figures/gradient_flow_figure.png?raw=true"/> 
+<img align="center" width="860" alt="Gradient flow on probability measures which dissipates the divergence or loss" src="./figures/gradient_flow_figure.png?raw=true"/> 
 
 Refer to more details on Wasserstein gradient flows in Chapter 7, 8 of the book by [Santambrogio](https://www.semanticscholar.org/paper/Optimal-Transport-for-Applied-Mathematicians%3A-of-Santambrogio/5d3f82856178dca5b48d14a8259b66121145c97c).
 
@@ -47,7 +47,7 @@ From a computational perspective, it becomes feasible to solve the high-dimensio
     
 On the other hand, Generative Adversarial Network (GAN), precisely $f$-GAN [Nowozin, 2016](https://arxiv.org/abs/1606.00709) also optimizes $\phi$ named *discriminator*. Instead of transporting particles, GAN redistributes particles by training another neural network named *generator* $g\_\theta$ for minimizing the loss, i.e. $\max\_{\phi} H_f[\phi; g\_\theta (Z), X]$: $$\min\_{\theta} \max\_{\phi} H_f[\phi; g\_\theta (Z), X] , \quad \text{where}$$ $$H_f[\phi; g\_\theta (Z), X] = \frac{1}{M}\sum\_{i=1}\^M \phi(g\_{\theta} (Z^{(i)}))- \inf\_{\nu \in \mathbb{R}}\left\\{ \nu + \frac{1}{N}\sum\_{i=1}\^N f^\*(\phi(X^{(i)})-\nu)\right\\}.$$
 
-<img align="center" width="1040" alt="Comparison of computational schemes: Left - GAN, Right - GPA" src="./Figures/gpa_vs_gan.png?raw=true"/> 
+<img align="center" width="1040" alt="Comparison of computational schemes: Left - GAN, Right - GPA" src="./figures/gpa_vs_gan.png?raw=true"/> 
 
 The lines below run the $(f, \Gamma_L)$-GPA on the source $P$ and the target $Q$. Since GPA hyper-parameters and data-dependent parameters should be tuned example-by-example, it is required to 
 
@@ -67,7 +67,7 @@ We observed that the choice of $f\_\text{KL}$ for heavy-tailed data $Student-t(\
 
 | $(f\_{\text{KL}}, \Gamma\_1)$-GPA | $(f\_{\alpha}, \Gamma\_1)$-GPA, $\alpha=2.0$ | $(f\_{\alpha}, \Gamma\_1)$-GPA, $\alpha=10.0$ | 
 | :------------------------------: | :-----------------------------------------: | :----------------------------: |
-| <img align="center" width="210" alt="KL-Lip1 GPA transporting Gaussian to Student-t(0.5) in 2D" src="./Figures/KL-Lipshitz_1.00_0.50_0200_0200_00_heavy_tail-movie.gif?raw=true"/> | <img align="center" width="210" alt="alpha=2-Lip1 GPA transporting Gaussian to Student-t(0.5) in 2D" src="./Figures/alpha=02.00-Lipshitz_1.00_0.50_0200_0200_00_heavy_tail-movie.gif?raw=true"/> | <img align="center" width="210" alt="alpha=10-Lip1 GPA transporting Gaussian to Student-t(0.5) in 2D" src="./Figures/alpha=10.00-Lipshitz_1.00_0.50_0200_0200_00_heavy_tail-movie.gif?raw=true"/> |
+| <img align="center" width="210" alt="KL-Lip1 GPA transporting Gaussian to Student-t(0.5) in 2D" src="./figures/kl-lipshitz_1_0p5_0200_0200_00_heavy_tail-movie.gif?raw=true"/> | <img align="center" width="210" alt="alpha=2-Lip1 GPA transporting Gaussian to Student-t(0.5) in 2D" src="./figures/alpha=2-Lipshitz_1_0p5_0200_0200_00_heavy_tail-movie.gif?raw=true"/> | <img align="center" width="210" alt="alpha=10-Lip1 GPA transporting Gaussian to Student-t(0.5) in 2D" src="./figures/alpha=10-Lipshitz_1_0p5_0200_0200_00_heavy_tail-movie.gif?raw=true"/> |
 
 Similar behavior is observed in GAN [Birrell, 2020](https://arxiv.org/abs/2011.05953): $f\_\alpha$ was more effective than $f\_\text{KL}$ in learning a heavy-tailed distribution with GAN.
 
@@ -77,13 +77,13 @@ Instead of learning a generator $g\_\theta$ as in GANs, solving ODEs in GPA make
 
 | $(f\_{\text{KL}}, \Gamma\_1)$-GPA | $(f\_{\text{KL}}, \Gamma\_1)$-GAN | Wasserstein GAN | 
 | :-------------------------------: | :-------------------------------: | :-------------: |
-|  <img align="center" height="220" alt="Generated images from KL-Lip1 GPA using 200 target samples" src="./Figures/KL-Lip1-gpa-600_200samples.png?raw=true"/> |  <img align="center" height="220" alt="Generated images from KL-Lip1 GAN using 200 target samples" src="./Figures/KL-Lip1-gan-200samples.png?raw=true"/> |  <img align="center" height="220" alt="Generated images from Wasserstein GAN using 200 target samples" src="./Figures/Wasserstein-gan-200samples.png?raw=true"/> |
+|  <img align="center" height="220" alt="Generated images from KL-Lip1 GPA using 200 target samples" src="./figures/kl-lip1-gpa-600_200samples.png?raw=true"/> |  <img align="center" height="220" alt="Generated images from KL-Lip1 GAN using 200 target samples" src="./figures/kl-lip1-gan-200samples.png?raw=true"/> |  <img align="center" height="220" alt="Generated images from Wasserstein GAN using 200 target samples" src="./figures/wasserstein-gan-200samples.png?raw=true"/> |
 
 There are a lot of literatures and methods for data augmentation to enrich training samples for GANs. GPA can be used as a data augmentation tool. [Swiss roll example](#lipschitz-regularized-generative-particles-algorithm) in the introduction restricts the setting that only 200 training data are available. We generate 5000 artificial samples from these 200 training data using GPA and then train a GAN with the original 200 + the 5000 GPA-augmented data. It stabilizes the GAN-training as well as results in a better quality for the generated samples from GAN. 
 
 | $(f\_{\text{KL}}, \Gamma\_1)$-divergence while training GAN | Generated samples from GAN trained with 200 original samples | Generated samples from GAN trained with 200 + 5000 GPA-augmented samples | 
 | :---------------------------------------------------------: | :----------------------------------: | :-----------------------------------------: |
-|  <img align="center" width="600" alt="KL-Lip1 GAN training loss decrease using 200 target samples and 200 target samples + 5000 augmented samples obtained by KL-Lip1 GPA" src="./Figures/data_augmentation_influence.png?raw=true"/> |  <img align="center" width="550" alt="Generated samples from KL-Lip1 GAN using 200 target samples" src="./Figures/without_augmentation.png?raw=true"/> |  <img align="center" width="220" alt="Generated samples from KL-Lip1 GAN using 200 target samples + 5000 augmented samples obtained by KL-Lip1 GPA" src="./Figures/with_augmentation.png?raw=true"/> |
+|  <img align="center" width="600" alt="KL-Lip1 GAN training loss decrease using 200 target samples and 200 target samples + 5000 augmented samples obtained by KL-Lip1 GPA" src="./figures/data_augmentation_influence.png?raw=true"/> |  <img align="center" width="550" alt="Generated samples from KL-Lip1 GAN using 200 target samples" src="./figures/without_augmentation.png?raw=true"/> |  <img align="center" width="220" alt="Generated samples from KL-Lip1 GAN using 200 target samples + 5000 augmented samples obtained by KL-Lip1 GPA" src="./figures/with_augmentation.png?raw=true"/> |
 
 
 ### Sample diversity of the generated samples
@@ -92,12 +92,12 @@ Since GPA is designed to transport particles to particles, the source particles 
 
 | $N=200$ Target samples |
 |:------------------:|
-| <img align="center" height="220" alt="MNIST 200 target samples" src="./Figures/KL-Lipschitz_1.0000_cond_0200_0600_00_check_overfitting-tiled_target.png?raw=true"/> |
+| <img align="center" height="220" alt="MNIST 200 target samples" src="./figures/kl-lipschitz_1_cond_0200_0600_00_check_overfitting-tiled_target.png?raw=true"/> |
 
 
 |$M=200$ Generated samples from $(f\_\text{KL}, \Gamma_1)$-GPA | $M=600$ Generated samples from $(f\_\text{KL}, \Gamma_1)$-GPA |
 |:--------------------------------------------------------:|:---------------------------------------------------------------------:|
-|<img align="center" height="220" alt="MNIST 200 target samples" src="./Figures/KL-Lip1-gpa-200_200samples.png?raw=true"/> | <img align="center" height="220" alt="MNIST 200 target samples" src="./Figures/KL-Lip1-gpa-600_200samples.png?raw=true"/> |
+|<img align="center" height="220" alt="MNIST 200 target samples" src="./figures/kl-lip1-gpa-200_200samples.png?raw=true"/> | <img align="center" height="220" alt="MNIST 200 target samples" src="./figures/kl-lip1-gpa-600_200samples.png?raw=true"/> |
 
 
 
@@ -108,7 +108,7 @@ Since GPA admits setting arbitrary source $P$ and target $Q$, phase transition a
 
 | Two data sets showing batch effects | Integrated data sets from GPA |
 |:--------------------------------------------------------:|:---------------------------------------------------------------------:|
-|<img align="center" height="220" alt="Two data sets showing batch effects" src="./Figures/source_target-dim50-standardize_all_3.png?raw=true"/> | <img align="center" height="220" alt="Integrated data sets from GPA" src="./Figures/transported_target-dim50-standardize_all_3.png?raw=true"/> |
+|<img align="center" height="220" alt="Two data sets showing batch effects" src="./figures/source_target-dim50-standardize_all_3.png?raw=true"/> | <img align="center" height="220" alt="Integrated data sets from GPA" src="./figures/transported_target-dim50-standardize_all_3.png?raw=true"/> |
 
 This example previews how to apply GPA on higher dimensional examples. More details are available in our paper.
 
