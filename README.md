@@ -78,7 +78,8 @@ Instead of learning a generator $g\_\theta$ as in GANs, solving ODEs in GPA make
 <img height="220" alt="Generated images from KL-Lip1 GAN using 200 target samples" src="figures/kl-lip1-gan-200samples.png?raw=true"/>   *image_caption*
  <img height="220" alt="Generated images from Wasserstein GAN using 200 target samples" src="figures/wasserstein-gan-200samples.png?raw=true"/> *image_caption*
 
-| $(f\_{\text{KL}}, \Gamma\_1)$-GPA | $(f\_{\text{KL}}, \Gamma\_1)$-GAN | Wasserstein GAN | 
+<| $(f\_{\text{KL}}, \Gamma\_1)$-GPA | $(f\_{\text{KL}}, \Gamma\_1)$-GAN | Wasserstein GAN |>
+| GPA | GAN | Wasserstein GAN |
 | :-------------------------------: | :-------------------------------: | :-------------: |
 | <img height="220" alt="Generated images from KL-Lip1 GPA using 200 target samples" src="./figures/kl-lip1-gpa-600_200samples.png?raw=true"/> |  <img height="220" alt="Generated images from KL-Lip1 GAN using 200 target samples" src="figures/kl-lip1-gan-200samples.png?raw=true"/> |  <img height="220" alt="Generated images from Wasserstein GAN using 200 target samples" src="figures/wasserstein-gan-200samples.png?raw=true"/> |
 
