@@ -91,7 +91,7 @@ Since GPA is designed to transport particles to particles, the source particles 
 
 
 | $N=200$ Target samples |
-|:------------------:|
+|:----------------------:|
 | <img align="center" height="220" alt="MNIST 200 target samples" src="./figures/kl-lipschitz_1_cond_0200_0600_00_check_overfitting-tiled_target.png?raw=true"/> |
 
 
