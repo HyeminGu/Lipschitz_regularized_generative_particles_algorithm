@@ -48,7 +48,6 @@ From a computational perspective, it becomes feasible to solve the high-dimensio
 On the other hand, Generative Adversarial Network (GAN), precisely $f$-GAN [Nowozin, 2016](https://arxiv.org/abs/1606.00709) also optimizes $\phi$ named *discriminator*. Instead of transporting particles, GAN redistributes particles by training another neural network named *generator* $g\_\theta$ for minimizing the loss, i.e. $\max\_{\phi} H_f[\phi; g\_\theta (Z), X]$: $$\min\_{\theta} \max\_{\phi} H_f[\phi; g\_\theta (Z), X] , \quad \text{where}$$ $$H_f[\phi; g\_\theta (Z), X] = \frac{1}{M}\sum\_{i=1}\^M \phi(g\_{\theta} (Z^{(i)}))- \inf\_{\nu \in \mathbb{R}}\left\\{ \nu + \frac{1}{N}\sum\_{i=1}\^N f^\*(\phi(X^{(i)})-\nu)\right\\}.$$
 
 <img align="center" width="1040" alt="Comparison of computational schemes: Left - GAN, Right - GPA" src="figures/gpa_vs_gan.png?raw=true"/> 
-
 *Left: Computational cheme for GAN, Right: Computational cheme for GPA*
 
 The lines below run the $(f, \Gamma_L)$-GPA on the source $P$ and the target $Q$. Since GPA hyper-parameters and data-dependent parameters should be tuned example-by-example, it is required to 
