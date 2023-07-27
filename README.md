@@ -56,7 +56,7 @@ The lines below run the $(f, \Gamma_L)$-GPA on the source $P$ and the target $Q$
 
 1. list up such parameters in `configs/"Dataset name"-GPA_NN.YAML`,
 2. write down a script which defines a dataloader in `data/"Recognizable dataloader name".py`,
-3. add lines in `scripts/util/generate_data.py` to call the dataloader function in the script written in step 2. If it is simple, one can directly write down a dataloader function in `shared_lib/generate_data.py`.
+3. add lines in `scripts/util/generate_data.py` to call the dataloader function in the script written in step 2. If it is simple, one can directly write down a dataloader function in `scripts/util/generate_data.py`.
 
 Required libraries are listed in `requirements.txt`.
 ```console
