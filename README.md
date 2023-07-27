@@ -24,11 +24,12 @@ The variational representation enables Lipschitz-regularized $f$-divergences to 
 ```python
 #!/usr/bin/env python3
 import numpy as np
+from scripts.GPA_NN.loss_NN import f_Lip_divergence
     
 P = np.random.normal(loc=0.0, scale=1.0, size=(500,2)) # 500 2D samples from P
 Q = np.random.normal(loc=10.0, scale=2.0, size=(300,2)) # 300 2D samples from Q
     
-print(f_Lip_divergence(P, Q, L=1.0))
+print(f_Lip_divergence(P, Q, params={'f':'KL', 'L':10.0, 'alpha':None}))
 ```
 
 ## Gradient flow on probability measures and Lipschitz-regularized GPA
@@ -57,9 +58,14 @@ The lines below run the $(f, \Gamma_L)$-GPA on the source $P$ and the target $Q$
 2. write down a script which defines a dataloader in `data/"Recognizable dataloader name".py`,
 3. add lines in `shared_lib/generate_data.py` to call the dataloader function in the script written in step 2. If it is simple, one can directly write down a dataloader function in `shared_lib/generate_data.py`.
 
+Required libraries are listed in `requirements.txt`.
+```console
+pip install -r requirements.txt
+```
+
 Then it is ready to run GPA in a console
 ```console
-python3 main.py --dataset "Dataset name" --phi_model GPA_NN
+python3 cui.py --dataset "Dataset name"
 ```
 or in a Jupyter notebook. There are sample Jupyter notebook examples in the `notebooks` folder.
 
