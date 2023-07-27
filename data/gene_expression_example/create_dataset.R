@@ -12,11 +12,9 @@ library(umap)
 
 # load series and platform data from GEO
 # Breast cancer
-#gset <- getGEO("GSE47109", GSEMatrix =TRUE, getGPL=FALSE)
-#gset <- getGEO("GSE10843", GSEMatrix =TRUE, getGPL=FALSE)
-#gset <- getGEO("GSE102484", GSEMatrix =TRUE, getGPL=FALSE)
-
-gset <- getGEO("GSE5281", GSEMatrix =TRUE, getGPL=FALSE)
+folder <- "Labeled_disease"
+accession_code <- "GSE26639" # GSE76275
+gset <- getGEO(accession_code, GSEMatrix =TRUE, getGPL=FALSE)
 
 if (length(gset) > 1) idx <- grep("GPL570", attr(gset, "names")) else idx <- 1
 gset <- gset[[idx]]
@@ -62,4 +60,4 @@ ex <- ex[!duplicated(ex), ]  # remove duplicates
 #write.matrix(ex, file="/Users/pantazis/Downloads/gene_expression_bio_example/GPL570/GSE61804.csv", sep = ",")
 
 #write.matrix(ex, file="/Users/pantazis/Downloads/gene_expression_bio_example/GPL570/GSE11882.csv", sep = ",")
-write.matrix(ex, file="/Users/pantazis/Downloads/gene_expression_bio_example/GPL570/GSE5281.csv", sep = ",")
+write.matrix(ex, file=sprintf("./GPL570/%s/%s.csv",folder, accession_code), sep = ",")
